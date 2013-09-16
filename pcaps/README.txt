@@ -40,18 +40,29 @@ set2.pcap:
 
 
 Table of plaintext username-password pairs:	
-	Protocol	(User,Pass)						Server_IP			Server_Port# 	User_Port#	Access	Domain_Name		Host_name
-	POP3		(e129286,4.Ekkama)				144.122.144.179 	110				54630		DENIED	metu.edu.tr		arikanda.general.services.metu.edu.tr
-	POP3		(mbergeson@hjnews.com,mb123on)	67.128.149.178		110				49795		GRANTED newswest.com	mail.newswest.com
-	POP3		(brewer,1qazxsw209simona12)		62.173.185.22		110				49767		GRANTED imartini.it		www.imartini.it
+	Protocol	(User,Pass)				Server_IP		Server_Port# 	User_Port#	Access	Domain_Name		Host_name
+	POP3		(e129286,4.Ekkama)			144.122.144.179 	110		54630		DENIED	metu.edu.tr		arikanda.general.services.metu.edu.tr
+	POP3		(mbergeson@hjnews.com,mb123on)		67.128.149.178		110		49795		GRANTED newswest.com		mail.newswest.com
+	POP3		(brewer,1qazxsw209simona12)		62.173.185.22		110		49767		GRANTED imartini.it		www.imartini.it
+	IMAP		(dmartini@cutaway.it,se1lasa)		109.168.119.166		143		49773		GRANTED kpnqwest.it		www.kpnqwest.it
+	telnet		(cisco,chris10)				200.60.17.1		23		13251		DENIED	unired.net.pe		unired.net.pe
+	telnet		(cisco,chelita)				""			""		""		""	""			""
+	telnet		(cisco,chayank)				""			""		""		""	""			""
+	telnet		(cisco,cereza)				""			""		""		""	""			""
+	telnet		(cisco,buburuza)			""			""		""		""	""			""
+	
 
 11. How many plaintext username-password pairs are there in this packet set?
-	A: Three plaintext pairs were found, as listed in the table above.
+	A: Nine plaintext pairs were found, as listed in the table above.
 
 12. Briefly describe how you found the username-password pairs.
 	A: I found these pairs by using the string-search function in wireshark to search for the string "pass".
 	On each password command found, I then used "Follow TCP Stream" to look at the entire conversation
 	for the given password. In the streams were corresponding "USER" commands indicating a username.
+	
+	For the telnet ones, I filtered by protocol telnet and scanned through the packetes, reading off
+	a terminal conversation between a server and a client trying to guess the password for the user "cisco".
+
 
 13. For each of the plaintext username-password pair that you found, identify the protocol used, server IP,
 the corresponding domain name (e.g., google.com), and port number.
@@ -59,11 +70,12 @@ the corresponding domain name (e.g., google.com), and port number.
 
 14. Of all the plaintext username-password pairs that you found, how many of them are legitimate? That is,
 the username-password was valid, access successfully granted?
-	A: Two out of the three pairs were legitimate.
+	A: Three of the pairs were granted access.
 
 15. How did you verified the successful username-password pairs?
 	A: When using the "Follow TCP Stream" wireshark functionality, the server either responded "OK"
-	for success or "ERR" for invalid credentials.
+	for success or "ERR" for invalid credentials (in POP3 and IMAP). In the telnet session, the server
+	responded with "Login invalid" each time, indicating failure.
 
 16. In a few words, explain why I asked you not to log on to websites or services associated with the
 username-password pairs that you found.
@@ -72,7 +84,8 @@ username-password pairs that you found.
 
 17. What advice would you give to the owners of the username-password pairs that you found so their
 account information would not be revealed "in-the-clear" in the future?
-	A: To enable SSL or TLS in their email client configuration / settings.
+	A: To enable SSL or TLS in their email client configuration / settings, and to use ssh instead
+	of telnet.
 
 18. Provide a listing of all IP addresses with corresponding hosts (hostname + domain name) that
 are in this PCAP set. Describe your methodology.
