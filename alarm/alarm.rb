@@ -158,8 +158,8 @@ $read, $write = IO.pipe
 def start_capture
 	pid = fork do
 		$read.close
-		cap = Capture.new(:start => true, :iface => 'eth0', :promisc => true)
-		#cap = Capture.new(:start => true, :iface => 'vmnet8', :promisc => true)
+		#cap = Capture.new(:start => true, :iface => 'eth0', :promisc => true)
+		cap = Capture.new(:start => true, :iface => 'vmnet8', :promisc => true)
 		cap.stream.each do |p|
 			dump = Marshal.dump(p)
 			#$write.send(Marshal.dump(p), 0)

@@ -31,6 +31,13 @@ to / from certain IP addresses:
 			nmap scans.
 	--> UDP scan (-sU), though it takes 10+ minutes since the scan itself can take that long.
 
+Detected using "User-Agent":
+----------------------------
+	--> Similar to the above scans which are implicitly detected, we are able to explicitly
+			able to detect Nmap scans which use the user-agent "Nmap" somewhere in the payload
+			of the TCP packets, depending on the protocol being scanned (eg SSH, HTTP, ...)
+			(for instance "nmap -A -P0 hostname")
+
 Presently Undetectable:
 -----------------------
 The following scans go undetected, as they are much harder to identify in a
