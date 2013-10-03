@@ -2,6 +2,8 @@ require 'packetfu'
 include PacketFu
 include Kernel
 require 'socket'
+require 'webrick'
+require 'stringio'
 
 #stream = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
 #stream.show_live()
@@ -78,9 +80,34 @@ def credit_card?(pkt,type)
 	return ret
 end
 
-def xss?(pkt,type)
+# Returns true if an HTTP GET request is detected in the body of a TCP or UDP packet
+def get_xss?(pkt,type)
 	body = (pkt.send (type+'_header')).body
 	#puts body
+	get = /\AGET\s+(?<get_request>\S+)\s+(HTTP)/.match(body)
+	#puts get.inspect
+	if get != nil
+		path = get["get_request"]
+		#puts path
+		ret = /((\%3C)|<)((\%2F)|\/)*[a-z0-9\%]+((\%3E)|>)/ix.match(path)
+		#puts ret.inspect
+		return ret
+	end
+	return false
+end
+
+# Returns true if an HTTP POST request is detected in the body of a TCP or UDP packet
+def post_xss?(pkt,type)
+	body = (pkt.send (type+'_header')).body
+	post = /\APOST\s+(?<post_request>\S+)\s+(HTTP)/.match(body)
+	if post != nil
+		#puts body
+		req = WEBrick::HTTPRequest.new(WEBrick::Config::HTTP)
+		req.parse(StringIO.new(body))
+		#puts req.body
+		ret = /((\%3C)|<)((\%2F)|\/)*[a-z0-9\%]+((\%3E)|>)/ix.match(req.body)
+		return ret
+	end
 	return false
 end
 
@@ -131,7 +158,8 @@ $read, $write = IO.pipe
 def start_capture
 	pid = fork do
 		$read.close
-		cap = Capture.new(:start => true, :iface => 'vmnet8', :promisc => true)
+		cap = Capture.new(:start => true, :iface => 'eth0', :promisc => true)
+		#cap = Capture.new(:start => true, :iface => 'vmnet8', :promisc => true)
 		cap.stream.each do |p|
 			dump = Marshal.dump(p)
 			#$write.send(Marshal.dump(p), 0)
@@ -198,7 +226,7 @@ $read.each_line("x-x-x-x") { |p|
 			puts "%d. ALERT: Credit card leaked in the clear from %s (%s)" % [count+=1, pkt.ip_saddr, type.upcase]
 		end
 		
-		if xss? pkt,type
+		if ((get_xss? pkt,type) or (post_xss? pkt,type))
 			puts "%d. ALERT: XSS is detected from %s (%s)" % [count+=1, pkt.ip_saddr, type.upcase]
 		end
 
