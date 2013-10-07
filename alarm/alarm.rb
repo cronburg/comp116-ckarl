@@ -80,7 +80,7 @@ def credit_card?(pkt,type)
 	return ret
 end
 
-# Returns true if an HTTP GET request is detected in the body of a TCP or UDP packet
+# Returns true if an HTTP GET request containing XSS is detected in the body of a TCP or UDP packet
 def get_xss?(pkt,type)
 	body = (pkt.send (type+'_header')).body
 	#puts body
@@ -96,7 +96,7 @@ def get_xss?(pkt,type)
 	return false
 end
 
-# Returns true if an HTTP POST request is detected in the body of a TCP or UDP packet
+# Returns true if an HTTP POST request containing XSS is detected in the body of a TCP or UDP packet
 def post_xss?(pkt,type)
 	body = (pkt.send (type+'_header')).body
 	post = /\APOST\s+(?<post_request>\S+)\s+(HTTP)/.match(body)
@@ -148,6 +148,8 @@ def nmap_scan?(pkt, type)
 	$count_dict[path] += 1
 	ret = ($count_dict[path] > Suspicious_Count)
 	$count_dict[path] = 0 if ret
+	body = (pkt.send (type+'_header')).body
+	ret = (ret or (body.include? 'Nmap'))
 	return ret
 end
 
@@ -199,10 +201,7 @@ $read.each_line("x-x-x-x") { |p|
 			puts "%d. ALERT: NULL scan is detected from %s (%s)" % [count+=1, pkt.ip_saddr, type.upcase]
 		end
 		
-		if syn? pkt,type
-			#puts "(%d) SYN dst port #%d" % [pkt_num, pkt.tcp_dst]
-			update_syn pkt
-		end
+		update_syn pkt if syn? pkt,type
 		
 		if rst? pkt,type
 			update_rst pkt
