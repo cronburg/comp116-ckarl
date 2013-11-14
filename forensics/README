@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#1)
+$ wget http://www.cs.tufts.edu/comp/116/downloads/a.jpg
+$ wget http://www.cs.tufts.edu/comp/116/downloads/b.jpg
+$ wget http://www.cs.tufts.edu/comp/116/downloads/c.jpg
+$ diff b.jpg c.jpg # No difference (b.jpg and c.jpg are identical)
+$ diff a.jpg b.jpg # Differ
+$ stat a.jpg | grep Size # ==> 912,588 bytes
+$ stat b.jpg | grep Size # ==> 914,429 bytes
+$ steghide extract -sf a.jpg # empty passphrase
+Enter passphrase: 
+wrote extracted data to "prado.jpg" # a close-up image of Norman Ramsey's face
+
+
