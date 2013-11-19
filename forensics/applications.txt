@@ -1,0 +1,24 @@
+Commandline: apt-get install locales-all
+Commandline: apt-get -y install git-core binutils ca-certificates initramfs-tools uboot-mkimage
+Commandline: apt-get -y install locales console-common less nano git
+Commandline: apt-get --yes --force-yes install wpasupplicant initramfs-tools uboot-mkimage nmap openssh-server
+Commandline: apt-get dist-upgrade
+Commandline: apt-get install kali-linux-full
+Commandline: apt-get dist-upgrade
+Commandline: apt-get install passing-the-hash unicornscan winexe enum4linux polenum nfspy wmis nipper-ng jsql ghost-phisher uniscan lbd automater arachni bully inguma sslsplit dumpzilla recon-ng ridenum jd-gui
+Commandline: apt-get install --force-reinstall=true sysv-rc
+Commandline: apt-get -y dist-upgrade
+Commandline: apt-get install -y metasploit
+Commandline: apt-get install --force-reinstall=true sysv-rc
+Commandline: apt-get install -y metasploit iceweasel
+Commandline: apt-get install --force-reinstall=true sysv-rc
+Commandline: apt-get dist-upgrade
+Commandline: apt-get -y install xfce4 xfce4-places-plugin
+Commandline: apt-get install --force-reinstall=true sysv-rc
+Commandline: apt-get -y dist-upgrade
+Commandline: apt-get install -y passing-the-hash unicornscan winexe enum4linux polenum nfspy wmis nipper-ng jsql ghost-phisher uniscan lbd automater arachni bully inguma sslsplit dumpzilla recon-ng ridenum jd-gui armitage kali-linux-full
+Commandline: apt-get install parted
+Commandline: apt-get dist-upgrade
+Commandline: apt-get install kali-linux
+Commandline: apt-get autoremove
+Commandline: apt-get install tor
