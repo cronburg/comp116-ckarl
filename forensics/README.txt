@@ -66,7 +66,7 @@ xfce4-places-plugin, armitage, parted, tor
 5. Is there a root password? If so, what is it?
 
 
-Yes, the password of "toor" can be found as follows:
+Yes, the root password (“toor”) of the system can be found as follows:
 
 
 $ strings sdcard.dd | egrep "^([a-z_][a-z0-9_]{0,30}):[^:]*:[0-9]*:[0-9]*:[0-9]*:[0-9]*:[^:]*:[^:]*:$" > shadow
@@ -80,12 +80,15 @@ root:$6$9Wim61h8$1BiweJjKZItqv62W5rmS/UCXQR/FGP97btwnJBk0XbeSb43PQseth8SGaxR7bhn
 root:$6$YxDB.SNvtnqhtt.T$slIOJSl7Lz07PtDF23m1G0evZH4MXvpo1VNebUUasM/je2sP6FXi2Y/QE1Ntg.93jOtTQOfZ8k2e/HhT8XzXN/:15818:0:99999:7:::
 
 
-These are cracked as (??? = not cracked yet):
+These are cracked as (??? = not cracked):
 admin:???
 root:???
 root:???
 root:toor
 root:password
+
+
+The password of “toor” corresponds to the hash found in /etc/shadow of the ext4 filesystem on the sdcard.
 
 
 6. Are there any additional user accounts on the system?
@@ -151,7 +154,7 @@ show in Las Vegas (see problem 10).
 
 
 9. Are there any encrypted files? If so, list the contents and a brief description of how you obtained the contents.
-Yes, there is a file: /root/.Dropbox.zip is a truecrypt file. After guessing likely passwords: celinedion, dion, celine, imyourbiggestfan. I found the right one after about 20 minutes: iloveyou. Inside the truecrypt archive is a video of a Celine Dion performance and a picture of a ticket from July 2012.
+Yes, there is a file: /root/.Dropbox.zip is a truecrypt file. After guessing likely passwords: celinedion, dion, celine, imalive. I found the right one after about 20 minutes: iloveyou. Inside the truecrypt archive is a video of a Celine Dion performance and a picture of a Celine Dion ticket from July 2012.
 
 
 10. Did the suspect at one point went to see this celebrity? If so, note the date and location where the suspect met the celebrity? Please elaborate how you determined this information.
@@ -167,7 +170,10 @@ spotify:album:41IwxoZoITRNmQheABRtwc
 This is “My Love Essential Collection” by Celine Dion (2008)
 
 
-There was also a directory /opt/Teeth with some weird things in it
+There was also a directory /opt/Teeth with some weird things in it.
+
+
+Using testdisk we find that the contents of the /home/ directory
 
 
 12. Who is the celebrity that the suspect has been stalking?
