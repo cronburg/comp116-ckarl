@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Apache Incident Visualization</title>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="map.css">
+		
+		<!-- Google Maps API and our script which uses it -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization">
+		</script>
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
+		<script src="map.js"></script>
+	</head>
+
+	<body>
+		<div id="map-canvas"></div>
+		<div id="panel">
+			<h3>Control Panel</h3><br/>
+				<button onclick="new_rectangle()">Add New Rectangle</button><br/>
+				<button onclick="new_circle()">Add New Circle</button><br/>
+				<button onclick="submit_list('black')">Submit as Blacklist</button><br/>
+				<button onclick="submit_list('white')">Submit as Whitelist</button><br/><br/>
+				<form action="javascript:update_refresh(document.getElementById('refresh').value)">
+					Refresh Rate: <input type="number" id="refresh" min="100" max="20000" value="10000"> (ms)<br/>
+					<input type="submit">
+				</form>
+		</div>
+	</body>
+</html>
